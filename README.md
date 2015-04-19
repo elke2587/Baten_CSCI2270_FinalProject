@@ -1,6 +1,7 @@
 # Baten_CSCI2270_FinalProject
 
 ==========README============
+Summary:
 This project contains a chess
 class for creating and editing
 chess positions. Each position
@@ -15,3 +16,11 @@ for, the class will store a
 "current board", to which the user
 can add moves or variations
 branching from the main variation.
+
+Dependencies:
+
+System Requirements:
+
+Contributors:
+
+Open issues/bugs:
