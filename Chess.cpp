@@ -81,12 +81,61 @@ void ChessBoard::addMove(string move)
 		newPosition->moveNum = currentPosition->moveNum;
 	}
 	//FEN for new position
+	string newFEN = currentPosition->posFEN;
 	
 	//next and previous assignment
 	newPosition->previous = currentPosition;
 	currentPosition->next.push_back(newPosition);
 	//moving into the newly created position
 	currentPosition = newPosition;
+}
+
+string ChessBoard::lineToString(string line)
+{
+	string str1 = "";
+	for(int i = 0; i<line.length(); i++)
+	{
+		int num = line[i];
+		if(num<=57 && num >= 49) //if the character is a number greater than 0
+		{
+			for(int i = 0; i<num-48; i++)
+			{
+				str1 += " ";
+			}
+		}
+		else
+		{
+			str1 += line[i];
+		}
+	}
+	return str1;
+}
+
+string ChessBoard::stringToLine(std::string str1)
+{
+	string line = "";
+	int space = 0;
+	for(int i = 0; i<str1.length(); i++)
+	{
+		if((int)str1[i] == 32)
+		{
+			space++;
+		}
+		else
+		{
+			if(space != 0)
+			{
+				line += to_string(space);
+				space = 0;
+			}
+			line += str1.substr(i,1);
+		}
+	}
+	if(space != 0)
+	{
+		line += to_string(space);
+	}
+	return line;
 }
 
 void ChessBoard::deleteVariation(string move)
@@ -149,7 +198,7 @@ bool ChessBoard::isValidInputMove(string move)
 	{
 		return false;
 	}
-	char firstletter = move[0];
+	int firstletter = move[0];
 	if(!(firstletter==66 || firstletter== 75 || firstletter==78 
 	|| firstletter==80 || firstletter==81 || firstletter == 82 
 	|| firstletter==98 || firstletter == 107 || firstletter == 110
@@ -157,11 +206,11 @@ bool ChessBoard::isValidInputMove(string move)
 	{
 		return false;
 	}
-	if(!(49<=move[3] && move[3]<=56 && 49<=move[5] && move[5]<=56)) //if the numbers specify positions not on the board
+	if(!(49<=move[2] && move[2]<=56 && 49<=move[4] && move[4]<=56)) //if the numbers specify positions not on the board
 	{
 		return false;
 	}
-	if(!(97<=move[2] && move[2]<=104 && 97<=move[4] && move[4]<=104)) //if the letters specify positions not on the board
+	if(!(97<=move[1] && move[1]<=104 && 97<=move[3] && move[3]<=104)) //if the letters specify positions not on the board
 	{
 		return false;
 	}

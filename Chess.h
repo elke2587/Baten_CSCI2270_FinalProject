@@ -19,10 +19,11 @@ class ChessBoard
 		std::string getFEN();
 		int getMoveNum();
 		void addMove(std::string move);
+		std::string lineToString(std::string line);
+		std::string stringToLine(std::string str1);
 		void deleteVariation(std::string move);
 		void moveForward();
 		void moveBackward();
-		
 		bool isValidInputMove(std::string move);
 		void showVariations();
 		void enterVariation(std::string move);
