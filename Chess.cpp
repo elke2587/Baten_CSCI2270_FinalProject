@@ -69,8 +69,10 @@ void ChessBoard::addMove(string move)
 		return;
 	}
 	position *newPosition = new position;
+	
 	//title of move
 	newPosition->move = move;
+	
 	//move number of new move
 	if(!whiteMove)
 	{
@@ -80,8 +82,50 @@ void ChessBoard::addMove(string move)
 	{
 		newPosition->moveNum = currentPosition->moveNum;
 	}
+	
 	//FEN for new position
 	string newFEN = currentPosition->posFEN;
+		//getting the row and column indexes from the input move
+	int firstRowIndex = 0;
+	for(int i = 0; i<8-(move[2]-48); i++)
+	{
+		firstRowIndex = newFEN.find("/",firstRowIndex+1);
+	}
+	int secondRowIndex = 0;
+	for(int i = 0; i<8-(move[4]-48); i++)
+	{
+		secondRowIndex = newFEN.find("/",secondRowIndex+1);
+	}
+	int firstColumnIndex = move[1]-97;
+	int secondColumnIndex = move[3]-97;
+			//converting the row in which the change is made to the string
+	string startLine = lineToString(newFEN.substr(firstRowIndex+1, newFEN.find("/",firstRowIndex+1)-firstRowIndex-1));
+	string endLine = lineToString(newFEN.substr(secondRowIndex+1, newFEN.find("/",secondRowIndex+1)-secondRowIndex-1));
+			//making the appropriate changes to the lines
+	startLine = startLine.substr(0,firstColumnIndex)+" "+startLine.substr(firstColumnIndex+1, 7-firstColumnIndex);
+	endLine = endLine.substr(0,secondColumnIndex)+move.substr(0,1)+endLine.substr(secondColumnIndex+1, 7-secondColumnIndex);
+			//converting the line back to FEN notation
+	startLine = stringToLine(startLine);
+	endLine = stringToLine(endLine);
+			//creating the whole FEN position
+	if(newFEN.find("/",firstRowIndex+1)<=newFEN.length())
+	{
+		newFEN = newFEN.substr(0,firstRowIndex+1)+startLine+newFEN.substr(newFEN.find("/",firstRowIndex+1));
+	}
+	else
+	{
+		newFEN = newFEN.substr(0,firstRowIndex+1)+startLine;
+	}
+	if(newFEN.find("/",secondRowIndex+1)<=newFEN.length())
+	{
+		newFEN = newFEN.substr(0,secondRowIndex+1)+endLine+newFEN.substr(newFEN.find("/",secondRowIndex+1));
+	}
+	else
+	{
+		newFEN = newFEN.substr(0,secondRowIndex+1)+endLine;
+	}
+			//storing the new FEN position to the new position
+	newPosition->posFEN = newFEN;
 	
 	//next and previous assignment
 	newPosition->previous = currentPosition;
@@ -90,6 +134,13 @@ void ChessBoard::addMove(string move)
 	currentPosition = newPosition;
 }
 
+/* 1. string ChessBoard::lineToString(string line)
+ * 2. Converts a line from a FEN position into a string of length 8 representing
+ *    that line in the position.
+ * 3. board.lineToString(Qd1f3);
+ * 4. Preconditions: an existing board, input line in FEN notaiton
+ * 	  Postconditions: none
+ */
 string ChessBoard::lineToString(string line)
 {
 	string str1 = "";
@@ -111,7 +162,15 @@ string ChessBoard::lineToString(string line)
 	return str1;
 }
 
-string ChessBoard::stringToLine(std::string str1)
+/* 1. string ChessBoard::stringToLine(string str1)
+ * 2. Converts a string of length 8 representing a line in the FEN position
+ * 	  to the FEN notation equivalent.
+ * 3. board.stringToLine(Qd1f3);
+ * 4. Preconditions: an existing board, move is in notation obtained from lineToString
+ * 	  method.
+ * 	  Postconditions: none
+ */
+string ChessBoard::stringToLine(string str1)
 {
 	string line = "";
 	int space = 0;
