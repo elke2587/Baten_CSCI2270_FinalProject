@@ -116,6 +116,12 @@ void ChessBoard::addMove(string move)
 	{
 		newFEN = newFEN.substr(0,firstRowIndex+1)+startLine;
 	}
+	secondRowIndex = 0;//the reassignment of secondRowIndex is required in case the length of a line has changed
+	for(int i = 0; i<8-(move[4]-48); i++)
+	{
+		secondRowIndex = newFEN.find("/",secondRowIndex+1);
+	}
+	
 	if(newFEN.find("/",secondRowIndex+1)<=newFEN.length())
 	{
 		newFEN = newFEN.substr(0,secondRowIndex+1)+endLine+newFEN.substr(newFEN.find("/",secondRowIndex+1));
@@ -236,6 +242,7 @@ void ChessBoard::moveBackward()
 {
 	if(currentPosition->previous != NULL)
 	{
+		cout<<"Current position is now:"<<endl;
 		currentPosition = currentPosition->previous;
 		cout<<currentPosition->posFEN<<endl;
 	}
@@ -285,7 +292,7 @@ bool ChessBoard::isValidInputMove(string move)
  */
 void ChessBoard::showVariations()
 {
-	if(currentPosition->next[0] == NULL)
+	if(currentPosition->next.size() != 0)
 	{
 		cout<<"Variations:"<<endl;
 		for(int i = 0; i<currentPosition->next.size(); i++)

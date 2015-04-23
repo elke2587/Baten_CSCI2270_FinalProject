@@ -21,11 +21,11 @@ int main()
 	cout<<"Qd4i5"<<" "<<board.isValidInputMove("Qd4i5")<<endl;
 	//
 	board.addMove("Pe2e4");
-	cout<<board.getFEN()<<endl;
+	//cout<<board.getFEN()<<endl;
 	board.addMove("pe7e5");
-	cout<<board.getFEN()<<endl;
+	//cout<<board.getFEN()<<endl;
 	board.addMove("Nb1c3");
-	cout<<board.getFEN()<<endl;
+	//cout<<board.getFEN()<<endl;
 	board.addMove("pd7d6");
 	cout<<board.getFEN()<<endl;
 }

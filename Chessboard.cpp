@@ -7,19 +7,21 @@ void printMenu();
 int main()
 {
 	bool quit = false;
-	int command;
+	string command;
+	int commandint;
 	string input;
 	ChessBoard board = ChessBoard();
 	while(!quit)
 	{
 		printMenu();
-		cin>>command;
 		cin.clear();
-		switch(command)
+		getline(cin,command);
+		commandint = stoi(command);
+		switch(commandint)
 		{
 			case 1:
 			//Print Current Position
-			cout<<board.getFEN<<endl;
+			cout<<board.getFEN()<<endl;
 			break;
 			case 2:
 			//Add Move
@@ -49,18 +51,28 @@ int main()
 			//Delete Variation
 			
 			break;
+			case 8:
+			//quit
+			quit = true;
+			cout<<"Goodbye!"<<endl;
+			break;
+			default:
+			cout<<"Invalid command given"<<endl;
+			break;
+		}
 	}
 }
 
 void printMenu()
 {
-	cout<<"=======CHESS BOARD======="
-	    <<"1. Print Current Position"
-	    <<"2. Add Move"
-	    <<"3. Move Forward"
-	    <<"4. Move Backward"
-	    <<"5. Display Variations"
-	    <<"6. Enter Variation"
-	    <<"7. Delete Variation"
+	cout<<"=======CHESS BOARD=======\n"
+	    <<"1. Print Current Position\n"
+	    <<"2. Add Move\n"
+	    <<"3. Move Forward\n"
+	    <<"4. Move Backward\n"
+	    <<"5. Display Variations\n"
+	    <<"6. Enter Variation\n"
+	    <<"7. Delete Variation\n"
+	    <<"8. Quit"
 	    <<endl;
 }
