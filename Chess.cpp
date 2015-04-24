@@ -222,7 +222,7 @@ void ChessBoard::deleteVariation(string move)
 	*}
 	*if(position2 == NULL)
 	*{
-	*	cout<<"Variation not found"<<endl;
+	*	cout<<"Variation not found"<<endl;Thh111
 	*	return;
 	*}
 	*/
