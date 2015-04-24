@@ -25,7 +25,8 @@ ChessBoard::~ChessBoard()
 	 * {
 	 * 		deleteVariation(root->next[i]->move);
 	 * }
-	 * */
+	*/
+	//delete root;
 }
 
 /* 1. string ChessBoard::getFEN()
@@ -203,9 +204,28 @@ string ChessBoard::stringToLine(string str1)
 	return line;
 }
 
+/* 1. void ChessBoard::deleteVariation()
+ * 2. Deletes a variation branchign from the currentPositon
+ * 3. board.deleteVariation();
+ * 4. Preconditions: an existing board, a variation in the line to delete
+ * 	  Postconditions: a whole line will be deleted form the tree
+ */
 void ChessBoard::deleteVariation(string move)
 {
-	
+	/*position *position2;
+	*for(int i = 0; i<currentPosition->next.size(); i++)
+	*{
+	*	if(currentPosition->next[i]->move == move)
+	*	{
+	*		position2 = currentPosition->next[i];
+	*	}
+	*}
+	*if(position2 == NULL)
+	*{
+	*	cout<<"Variation not found"<<endl;
+	*	return;
+	*}
+	*/
 }
 
 /* 1. void ChessBoard::moveForward()
@@ -218,7 +238,7 @@ void ChessBoard::deleteVariation(string move)
  */
 void ChessBoard::moveForward()
 {
-	if(currentPosition->next[0] != NULL)
+	if(currentPosition->next.size() != 0)
 	{
 		currentPosition = currentPosition->next[0];
 		cout<<"Main line followed:"<<endl;
@@ -324,7 +344,7 @@ void ChessBoard::enterVariation(string move)
 		return;
 	}
 	//if the variation exists, it is found and entered
-	if(currentPosition->next[0] != NULL)
+	if(currentPosition->next.size() != 0)
 	{
 		bool found = false;
 		for(int i = 0; i<currentPosition->next.size(); i++)
