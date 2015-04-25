@@ -1,5 +1,6 @@
 #include "Chess.h"
 #include <iostream>
+#include <stack>
 using namespace std;
 
 /* 1. ChessBoard::ChessBoard()
@@ -66,7 +67,7 @@ void ChessBoard::addMove(string move)
 	//checks if the move is in the right format
 	if(!(isValidInputMove(move)))
 	{
-		cout<<"Input move is not in the correct format."<<endl;
+		cout<<"The input move is not a valid move."<<endl;
 		return;
 	}
 	position *newPosition = new position;
@@ -78,10 +79,12 @@ void ChessBoard::addMove(string move)
 	if(!whiteMove)
 	{
 		newPosition->moveNum = currentPosition->moveNum++;
+		whiteMove = true;
 	}
 	else
 	{
 		newPosition->moveNum = currentPosition->moveNum;
+		whiteMove = false;
 	}
 	
 	//FEN for new position
@@ -212,20 +215,38 @@ string ChessBoard::stringToLine(string str1)
  */
 void ChessBoard::deleteVariation(string move)
 {
-	/*position *position2;
-	*for(int i = 0; i<currentPosition->next.size(); i++)
-	*{
-	*	if(currentPosition->next[i]->move == move)
-	*	{
-	*		position2 = currentPosition->next[i];
-	*	}
-	*}
-	*if(position2 == NULL)
-	*{
-	*	cout<<"Variation not found"<<endl;Thh111
-	*	return;
-	*}
-	*/
+	position *position2;
+	int foundPosition;
+	for(int i = 0; i<currentPosition->next.size(); i++)
+	{
+		if(currentPosition->next[i]->move == move)
+		{
+			position2 = currentPosition->next[i];
+			foundPosition = i;
+		}
+	}
+	if(position2 == NULL)
+	{
+		cout<<"Variation not found"<<endl;
+		return;
+	}
+	currentPosition->next.erase(currentPosition->next.begin()+foundPosition);
+	stack<position*> P;
+	P.push(position2);
+	position* current;
+	while(!P.empty())
+	{
+		current = P.top();
+		P.pop();
+		if(current->next.size() != 0)
+		{
+			for(int i = 0; i<current->next.size(); i++)
+			{
+				P.push(current->next[i]);
+			}
+		}
+		delete current;
+	}
 }
 
 /* 1. void ChessBoard::moveForward()
@@ -248,6 +269,7 @@ void ChessBoard::moveForward()
 	{
 		cout<<"End of line reached"<<endl;
 	}
+	whiteMove != whiteMove;
 }
 
 /* 1. void ChessBoard::moveBackward()
@@ -270,6 +292,7 @@ void ChessBoard::moveBackward()
 	{
 		cout<<"Initial position reached"<<endl;
 	}
+	whiteMove = !whiteMove;
 }
 
 /* 1. bool ChessBoard::isValidInputMove(string move)
@@ -285,10 +308,10 @@ bool ChessBoard::isValidInputMove(string move)
 		return false;
 	}
 	int firstletter = move[0];
-	if(!(firstletter==66 || firstletter== 75 || firstletter==78 
-	|| firstletter==80 || firstletter==81 || firstletter == 82 
-	|| firstletter==98 || firstletter == 107 || firstletter == 110
-	|| firstletter == 112 || firstletter == 113 || firstletter == 114)) //if the first character is not an accepted letter
+	if(!((whiteMove && (firstletter==66 || firstletter== 75 || firstletter==78 
+	|| firstletter==80 || firstletter==81 || firstletter == 82)) || (!whiteMove && 
+	(firstletter==98 || firstletter == 107 || firstletter == 110
+	|| firstletter == 112 || firstletter == 113 || firstletter == 114)))) //if the first character is not an accepted letter
 	{
 		return false;
 	}
@@ -367,4 +390,5 @@ void ChessBoard::enterVariation(string move)
 	{
 		cout<<"No variations branching from the current position"<<endl;
 	}
+	whiteMove = !whiteMove;
 }
