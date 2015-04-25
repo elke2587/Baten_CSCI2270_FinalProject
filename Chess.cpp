@@ -21,13 +21,14 @@ ChessBoard::ChessBoard()
 //destructor
 ChessBoard::~ChessBoard()
 {
-	/*currentPosition = root;
-	 * for(int i = 0; i<root->next.size(); i++)
-	 * {
-	 * 		deleteVariation(root->next[i]->move);
-	 * }
-	*/
-	//delete root;
+	currentPosition = root;
+	if(root->next.size() != 0)
+	{
+		for(int i = 0; i<root->next.size(); i++)
+		{
+			deleteVariation(root->next[i]->move);
+		}
+	}
 }
 
 /* 1. string ChessBoard::getFEN()
