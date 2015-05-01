@@ -216,7 +216,7 @@ string ChessBoard::stringToLine(string str1)
  */
 void ChessBoard::deleteVariation(string move)
 {
-	position *position2;
+	position *position2 = NULL;
 	int foundPosition;
 	for(int i = 0; i<currentPosition->next.size(); i++)
 	{
