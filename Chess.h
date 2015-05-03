@@ -27,6 +27,8 @@ class ChessBoard
 		bool isValidInputMove(std::string move);
 		void showVariations();
 		void enterVariation(std::string move);
+		//void startOver(std::vector<position*> next);
+		std::string getPrevious();
 	private:
 		position *root;
 		position *currentPosition;

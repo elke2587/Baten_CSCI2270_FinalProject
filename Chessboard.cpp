@@ -54,9 +54,12 @@ int main()
 			board.deleteVariation(input);
 			break;
 			case 8:
-			cout<<"The current move number is: "<<board.getMoveNum()<<endl;
+			cout<<"The current move number is: "<<board.getMoveNum()<< endl;
 			break;
 			case 9:
+            cout<<"The previous move is: "<<board.getPrevious()<<endl;
+            break;
+			case 10:
 			//quit
 			quit = true;
 			cout<<"Goodbye!"<<endl;
@@ -79,6 +82,7 @@ void printMenu()
 	    <<"6. Enter Variation\n"
 	    <<"7. Delete Variation\n"
 	    <<"8. Get Move Number\n"
-	    <<"9. Quit"
+	    <<"9. Get Previous Move\n"
+	    <<"10. Quit"
 	    <<endl;
 }

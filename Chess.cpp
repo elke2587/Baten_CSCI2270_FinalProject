@@ -6,7 +6,7 @@ using namespace std;
 /* 1. ChessBoard::ChessBoard()
  * 2. Constructs the chessboard, initializing the graph and initial position.
  * 3. ChessBoard board = new ChessBoard();
- * 4. Preconditions: none 
+ * 4. Preconditions: none
  * 	  Postconditions: creates a new instance of the ChessBoard class" */
 ChessBoard::ChessBoard()
 {
@@ -29,6 +29,20 @@ ChessBoard::~ChessBoard()
 			deleteVariation(root->next[i]->move);
 		}
 	}
+}
+
+/*void ChessBoard::startOver(vector<position*> next)
+{
+    for( int j = 0, i = next.size(); j < i ; j++)
+    {
+        position* temp = next.at(j); // not it
+        delete temp;
+    }
+    next.clear();
+}*/
+string ChessBoard:: getPrevious()
+{
+    return currentPosition->previous->posFEN;
 }
 
 /* 1. string ChessBoard::getFEN()
@@ -72,10 +86,10 @@ void ChessBoard::addMove(string move)
 		return;
 	}
 	position *newPosition = new position;
-	
+
 	//title of move
 	newPosition->move = move;
-	
+
 	//move number of new move
 	if(!whiteMove)
 	{
@@ -87,7 +101,7 @@ void ChessBoard::addMove(string move)
 		newPosition->moveNum = currentPosition->moveNum;
 		whiteMove = false;
 	}
-	
+
 	//FEN for new position
 	string newFEN = currentPosition->posFEN;
 		//getting the row and column indexes from the input move
@@ -126,7 +140,7 @@ void ChessBoard::addMove(string move)
 	{
 		secondRowIndex = newFEN.find("/",secondRowIndex+1);
 	}
-	
+
 	if(newFEN.find("/",secondRowIndex+1)<=newFEN.length())
 	{
 		newFEN = newFEN.substr(0,secondRowIndex+1)+endLine+newFEN.substr(newFEN.find("/",secondRowIndex+1));
@@ -137,7 +151,7 @@ void ChessBoard::addMove(string move)
 	}
 			//storing the new FEN position to the new position
 	newPosition->posFEN = newFEN;
-	
+
 	//next and previous assignment
 	newPosition->previous = currentPosition;
 	currentPosition->next.push_back(newPosition);
@@ -309,8 +323,8 @@ bool ChessBoard::isValidInputMove(string move)
 		return false;
 	}
 	int firstletter = move[0];
-	if(!((whiteMove && (firstletter==66 || firstletter== 75 || firstletter==78 
-	|| firstletter==80 || firstletter==81 || firstletter == 82)) || (!whiteMove && 
+	if(!((whiteMove && (firstletter==66 || firstletter== 75 || firstletter==78
+	|| firstletter==80 || firstletter==81 || firstletter == 82)) || (!whiteMove &&
 	(firstletter==98 || firstletter == 107 || firstletter == 110
 	|| firstletter == 112 || firstletter == 113 || firstletter == 114)))) //if the first character is not an accepted letter
 	{
